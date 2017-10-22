@@ -33,14 +33,15 @@ while a < 5:
 		
 		men = [x for x in mention_list[1]]
 		if men[-2:] == [u'\u3068',u'\u306f']:#メンションが_とは_で終わっていたら
-			kensaku = [x for x in men[-2:]]
-			kensaku = ",".join(kensaku)
+			kensaku = [x for x in men[:-2]]
+			kensaku = "".join(kensaku)
 			wikipedia.set_lang("jp")
 			try:
 				wiki_serch = wikipedia.summary(kensaku , sentences = 1)
 				print(wiki_serch)
 				params = {"status" : "@"+ username + " " + wiki_serch}
 			except:
+				print(wiki_serch)
 				params = {"status" : "@" + username + " " + "該当なしだよ〜"} 
 			req = twitter.post("https://api.twitter.com/1.1/statuses/update.json", params = params)
 			maenoid = id
